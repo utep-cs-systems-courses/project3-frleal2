@@ -9,21 +9,32 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
 
+#define LED BIT6
+
 short redrawScreen = 1;
 
 int main(void) {
-
+  P1DIR |= LED;
+  P1OUT |= LED;
   
   configureClocks();		/* setup master oscillator, CPU & peripheral clocks */
-  led_init();
-  switch_init();
   lcd_init();
+  switch_init();
+  
+  //led_init();
   buzzer_init();
   enableWDTInterrupts();	/* enable periodic interrupt */
-
   or_sr(0x18);		/* CPU off, GIE on */
+
+  clearScreen(COLOR_RED);
+  
 }
 
 void wdt_c_handler(){
-  clearScreen(COLOR_RED);
+  static int secCount = 0;
+  secCount ++;
+  if (secCount >= 25) {/* 10/sec */
+    secCount = 0;
+    redrawScreen = 1;
+  }
 }
