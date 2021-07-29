@@ -7,7 +7,6 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
 
-char interruptTime;
 
 char turn_on_green(){
   green_on = 1;
@@ -37,22 +36,21 @@ void state_advance()		/* alternate between toggling red & green */
 {
 
   switch(state){
-  case 1: //fully bright
-    clearScreen(COLOR_RED);
+  case 1: //MOVES SHAPE LEFT
+    stopCPU = 0;
     move_shape_Left(3);
-    buzzer_set_period(2551);
     break;
-  case 2: // half dim
-    clearScreen(COLOR_RED);
+  case 2://MOVES SHAPE RIGHT
     move_shape_Right(3);
-    buzzer_set_period(2551);
+    stopCPU = 0;
     break;
-  case 3:// full dim
+  case 3://CLEARS SCREEN GREEN
     clearScreen(COLOR_GREEN);
-    //drawString("GAME OVER");
+    stopCPU = 0;
     break;
-  case 4:
-    buzzer_set_period(0);
+  case 4://stops CPU
+    stopCPU = 1;
+    return;
     break;
   }
 }
