@@ -11,6 +11,8 @@
 void switch_init();
 void switch_interrupt_handler();
 
+//extern int state;
+//extern int stopCPU;
 extern char interruptTime;
 extern char switch_state_down_1, switch_state_changed;
 extern char switch_state_down_2; /* effectively boolean */

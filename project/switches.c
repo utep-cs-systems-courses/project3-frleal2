@@ -7,9 +7,6 @@
 
 #include "stateMachines.h"
 
-int state = 0;
-int stopCPU = 0;
-
 char switch_state_down_1, switch_state_changed; /* effectively boolean */
 
 char switch_state_down_2; /* effectively boolean */
@@ -18,7 +15,7 @@ char switch_state_down_3; /* effectively boolean */
 
 char switch_state_down_4; /* effectively boolean */
 
-
+extern int state;
 
 static char switch_update_interrupt_sense()
 
@@ -69,22 +66,22 @@ void switch_interrupt_handler()
 
 
   if(switch_state_down_1){
-    state = 1;
+    state = 0;
     state_advance();
   }
   
   if(switch_state_down_2){
-    state = 2;
+    state = 1;
     state_advance();
   }
 
   if(switch_state_down_3){
-    state = 3;
+    state = 2;
     state_advance();
   }
 
   if(switch_state_down_4){
-    state = 4;
+    state = 3;
     state_advance();
   }
 }
